@@ -12,7 +12,13 @@ $updater         = new AlicloudUpdateRecord($AccessKeyId, $AccessKeySecret);
 $domainname      = getenv('DOMAIN_NAME');
 $record          = getenv('RECORD_NAME');
 
-$newIp = $_SERVER['REMOTE_ADDR']; // New IP
+
+if ($_SERVER['HTTP_X_FORWARDED_FOR']){
+    $newIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} 
+else{ 
+    $newIp = $_SERVER['REMOTE_ADDR'];
+}
 
 $updater->setDomainName($domainname);
 $updater->setRecordType('A');
